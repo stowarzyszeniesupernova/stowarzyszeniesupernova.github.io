@@ -4,10 +4,13 @@
   --max:1040px; --r:14px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;
      background:var(--bg);color:var(--text);line-height:1.6;font-size:17px}
 a{color:var(--gold2)}
+/* długie adresy (e-mail, URL) łamią się zamiast wychodzić poza ramkę */
+p,dd,li{overflow-wrap:break-word}
+a[href^="mailto:"]{overflow-wrap:anywhere}
 a:hover{color:#fff}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
 
@@ -17,7 +20,9 @@ header.nav{position:sticky;top:0;z-index:10;background:rgba(11,16,32,.88);
 header.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
 .brand{font-weight:800;letter-spacing:.14em;text-decoration:none;color:var(--text);font-size:15px}
 .brand span{color:var(--gold)}
-nav ul{list-style:none;display:flex;gap:4px;margin:0;padding:0}
+nav{min-width:0}
+nav ul{list-style:none;display:flex;gap:4px;margin:0;padding:0;overflow-x:auto;scrollbar-width:none}
+nav ul::-webkit-scrollbar{display:none}
 nav a{display:block;white-space:nowrap;padding:8px 12px;border-radius:999px;text-decoration:none;color:var(--muted);font-size:15px}
 nav a:hover{color:var(--text);background:var(--bg2)}
 
@@ -53,7 +58,7 @@ section{padding:80px 0;scroll-margin-top:60px}
 section.alt{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 h2{font-size:clamp(26px,4vw,36px);margin:0 0 10px}
 .sub{color:var(--muted);margin:0 0 36px;max-width:60ch}
-.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px}
 .card h3{margin:0 0 8px;font-size:19px}
 .card p{margin:0;color:var(--muted)}
@@ -62,9 +67,10 @@ h2{font-size:clamp(26px,4vw,36px);margin:0 0 10px}
 .icon svg{width:22px;height:22px}
 
 /* Aplikacje */
-.apps{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.apps{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
 .app{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:28px;display:flex;flex-direction:column}
 .app-head{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.app-head>div{min-width:0}
 .app-logo{width:60px;height:60px;border-radius:16px;flex:none;display:grid;place-items:center;
           background:linear-gradient(145deg,#1e2c5c,#0f1733);border:1px solid var(--line);color:var(--gold)}
 .app-logo svg{width:32px;height:32px}
@@ -78,23 +84,14 @@ h2{font-size:clamp(26px,4vw,36px);margin:0 0 10px}
 .btn.soon{border:1px dashed var(--line);color:var(--muted);cursor:default}
 
 /* Kontakt */
-.contact{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.contact{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
 dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 18px}
 dt{color:var(--muted)}
-dd{margin:0;font-weight:600;word-break:break-word}
+dd{margin:0;font-weight:600;min-width:0}
 
 
 footer{padding:30px 0;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
-
-@media (max-width:640px){
-  header.nav .wrap{padding:0 12px;gap:8px}
-  .brand{font-size:12px;letter-spacing:.1em}
-  nav ul{gap:0}
-  nav a{padding:6px 7px;font-size:13px}
-  .hero{padding:64px 0 56px}
-  section{padding:60px 0}
-}
 
 /* Podstrony */
 .page-head{padding:56px 0 40px;background:radial-gradient(circle at 85% 20%, rgba(242,184,75,.25) 0, rgba(242,184,75,0) 30%), var(--bg2);border-bottom:1px solid var(--line)}
@@ -110,19 +107,54 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 nav a[aria-current="page"]{color:var(--text);background:var(--bg2)}
 
 /* Festiwal */
-.fest{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start}
+.fest{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));align-items:start}
 .fest-lead p{color:var(--muted);margin:0 0 14px}
 .edition{background:linear-gradient(160deg,#2a1d3f,#17213f);border:1px solid #4a3a6a;border-radius:var(--r);padding:28px}
 .edition .tag{margin:0 0 12px}
 .edition h3{font-size:26px;margin:0 0 6px}
 .edition .when{color:var(--gold2);font-weight:700;margin:0 0 14px}
 .edition p{color:var(--muted);margin:0 0 10px}
-.timeline{list-style:none;margin:36px 0 0;padding:0;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.timeline{list-style:none;margin:36px 0 0;padding:0;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr))}
 .timeline li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .timeline b{display:block;color:var(--gold)}
 .timeline span{color:var(--muted);font-size:15px}
 
+/* ===== Telefony ===== */
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  header.nav .wrap{padding:0 12px;gap:8px;height:56px}
+  .brand{font-size:12px;letter-spacing:.1em;flex:none}
+  nav ul{gap:0}
+  nav a{padding:10px 7px;font-size:13px}
+  section{padding:48px 0;scroll-margin-top:56px}
+  .hero{padding:56px 0 48px}
+  .page-head{padding:36px 0 28px}
+  .sub{margin-bottom:24px}
+
+  .card{padding:20px}
+  .grid{gap:14px}
+
+  .apps{gap:16px}
+  .app{padding:20px}
+  .app-head{gap:12px;margin-bottom:12px}
+  .app-logo{width:48px;height:48px;border-radius:12px}
+  .app-logo svg{width:26px;height:26px}
+  .app h3{font-size:20px}
+  .tag{font-size:11px;letter-spacing:.04em;border-radius:8px}
+
+  .fest{gap:20px}
+  .edition{padding:20px}
+  .edition h3{font-size:22px}
+  .timeline{margin-top:24px}
+
+  /* dane wydawcy: etykieta nad wartością zamiast dwóch wąskich kolumn */
+  dl{grid-template-columns:1fr;gap:2px}
+  dd{margin-bottom:12px}
+  dd:last-child{margin-bottom:0}
+}
+
 @media (max-width:380px){
   .brand{font-size:11px;letter-spacing:.06em}
-  nav a{padding:6px 5px;font-size:12px}
+  nav a{padding:10px 5px;font-size:12px}
+  body{font-size:16px}
 }
